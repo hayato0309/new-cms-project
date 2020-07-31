@@ -12,4 +12,16 @@ class Post extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+
+    // // Mutator
+    // public function setPostImageAttribute($value){
+
+    //     $this->attribute['post_image'] = asset($value);
+    // }
+
+    // Accessor
+    public function getPostImageAttribute($value){
+
+        return asset('/storage/' . $value);
+    }
 }

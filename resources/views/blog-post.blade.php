@@ -19,7 +19,7 @@
     <hr>
 
     <!-- Preview Image -->
-    <img class="img-fluid rounded" src="/images/{{$post->post_image}}" alt="{{$post->post_image}}" style="width:auto; height:300; object-fit:cover">
+    <img class="img-fluid rounded" src="/images/{{$post->post_image}}" alt="{{$post->post_image}}" style="width:900px; height:300px; object-fit:cover">
 
     <hr>
 
