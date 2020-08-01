@@ -37,3 +37,5 @@ Route::middleware('auth')->group(function(){
     Route::delete('/admin/posts/{id}/delete', 'PostController@destroy')->name('post.destroy');
     
 });
+
+// Route::get('/admin/posts/{id}/edit', 'PostController@edit')->middleware('can:view,post')->name('post.edit');
