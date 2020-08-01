@@ -11,10 +11,9 @@
                 <input type="text" name="title" class="form-control" id="title" aria-describedby="" placeholder="Enter title" value="{{$post->title}}">
             </div>
             <div class="form-group">
-                <div>
-                    <img class="img-thumbnail" src="{{$post->post_image}}" alt="{{$post->post_image}}" style="height:130px">
+                <div class="mb-4">
+                    <img class="img-thumbnail" src="{{$post->post_image}}" alt="post_image" style="height:130px">
                 </div>
-                <br>
                 <input type="file" name="post_image" class="form-control_file" id="post_image">
             </div>
             {{-- <div class="form-group">
