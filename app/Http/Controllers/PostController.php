@@ -12,7 +12,11 @@ class PostController extends Controller
 
     public function index(){
 
-        $posts = auth()->user()->posts;
+        $posts = auth()->user()->posts()->paginate(10);
+        // そのユーザーのPostを取ってくる & pagination
+
+        // $posts = auth()->user()->posts;
+        // そのユーザーのPostを取ってくる
         
         // $posts = Post::all();
 
