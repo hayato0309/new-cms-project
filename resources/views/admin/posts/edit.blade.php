@@ -12,7 +12,7 @@
             </div>
             <div class="form-group">
                 <div class="mb-4">
-                    <img class="img-thumbnail" src="{{$post->post_image}}" alt="post_image" style="height:130px">
+                    <img class="rounded" src="{{$post->post_image}}" alt="post_image" style="height:130px">
                 </div>
                 <input type="file" name="post_image" class="form-control_file" id="post_image">
             </div>
