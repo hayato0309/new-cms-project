@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'username', 'name', 'avatar', 'email', 'password',
     ];
 
     /**
@@ -36,6 +36,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // passwordを暗号化するためのmutator
+    public function setPasswordAttribute($value){
+
+        $this->attributes['password'] = bcrypt($value);
+        // ここで暗号化しているので、デフォルトのregister機能で暗号化するところは、削除している。
+        // RegisterController.php
+    }
+
+    // profile imageのパスを通すためのaccessor
+    public function getAvatarAttribute($value){
+        return asset('/storage/' . $value);
+    }
 
 
     public function posts(){

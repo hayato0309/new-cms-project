@@ -37,6 +37,7 @@ Route::middleware('auth')->group(function(){
     Route::delete('/admin/posts/{id}/delete', 'PostController@destroy')->name('post.destroy');
 
     Route::get('/admin/users/{id}/profile', 'UserController@show')->name('user.profile.show');
+    Route::put('/admin/users/{id}/update', 'UserController@update')->name('user.profile.update');
     
 });
 
