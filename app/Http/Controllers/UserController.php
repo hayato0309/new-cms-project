@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    public function index(){
+
+        $users = User::all();
+
+        return view('admin.users.index', conpact('users'));
+    }
+
     public function show($id){
 
         $user = User::findOrFail($id);
