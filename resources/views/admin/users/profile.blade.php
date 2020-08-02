@@ -4,9 +4,13 @@
 
     <h1>User Profile for : {{$user->name}}</h1>
 
+    @if(session('user-profile-updated-message'))
+        <div class="alert alert-success">{{session('user-profile-updated-message')}}</div>
+    @endif
+
     <div class="row">
         <div class="col-sm-6">
-            <form method="POST" action="{{route('user.profile.update', [auth()->user()->id => 'id'])}}" enctype="multipart/form-data">
+            <form method="POST" action="{{route('user.profile.update', ['id' => auth()->user()->id])}}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="mb-4">
@@ -51,8 +55,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="password-confirmation">Confirm Password</label>
-                    <input type="password" name="password-confirmation" class="form-control {{$errors->has('password-confirmation' ? 'is-invalid' : '')}}" id="password-confirmation">
+                    <label for="password_confirmation">Confirm Password</label>
+                    <input type="password" name="password_confirmation" class="form-control {{$errors->has('password-confirmation' ? 'is-invalid' : '')}}" id="password-confirmation">
                     @error('password-confirmation')
                         <div class="invalid-feedback">{{$message}}</div>
                     @enderror

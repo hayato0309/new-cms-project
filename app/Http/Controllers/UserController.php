@@ -22,25 +22,19 @@ class UserController extends Controller
             'email' => ['required', 'email', 'max:255'],
             'avatar' => ['file'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password_confirmation' => ['required'],
         ]);
 
         $user = User::findOrFail($id);
 
         if(request('avatar')){
             $input['avatar'] = request('avatar')->store('images');
-            $user->avatar = $input['avatar'];
         }
 
-        $user->username = $input['username'];
-        $user->name = $input['name'];
-        $user->email = $input['email'];
-        $user->password = $input['password'];
+        $user->update($input);
 
-        auth()->user()->save($user);
+        session()->flash('user-profile-updated-message', 'Your profile was updated.');
 
-        session()->flash('user-profile-updated-message', 'User Profile was updated.');
-
-        return redirect()->route('user.profile.update');
-
+        return back();
     }
 }
