@@ -2,9 +2,14 @@
     @section('content')
         <h1>Users</h1>
 
+        @if(session('user-deleted-message'))
+            <div class="alert alert-success">{{session('user-deleted-message')}}</div>
+        @endif
+            
+
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Users</h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -17,6 +22,7 @@
                         <th>Name</th>
                         <th>Registered Date</th>
                         <th>Updated Date</th>
+                        <th>Delete</th>
                     </tr>
                     </thead>
                     <tfoot>
@@ -27,6 +33,7 @@
                         <th>Name</th>
                         <th>Registered Date</th>
                         <th>Updated Date</th>
+                        <th>Delete</th>
                     </tr>
                     </tfoot>
                     <tbody>
@@ -38,6 +45,13 @@
                             <td>{{$user->name}}</td>
                             <td>{{$user->created_at->diffForHumans()}}</td>
                             <td>{{$user->updated_at->diffForHumans()}}</td>
+                            <td>
+                                <form method="POST" action="{{route('user.destroy', ['user' => $user->id])}}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </td>
                         <td>
 
                             {{-- @can('view', $post)
