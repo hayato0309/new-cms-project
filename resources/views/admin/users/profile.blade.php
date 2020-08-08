@@ -107,8 +107,24 @@
                                 <td>{{$role->id}}</td>
                                 <td>{{$role->name}}</td>
                                 <td>{{$role->slug}}</td>
-                                <td><button class="btn btn-primary">Attach</button></td>
-                                <td><button class="btn btn-danger">Detach</button></td>
+                                <td>
+                                    <form method="POST" action="{{route('users.role.attach', $user)}}"> 
+                                        @csrf
+                                        @method('PUT')
+                                        <input type="hidden" name="role" value="{{$role->id}}">
+                                        {{-- hidden の値は request('name')で受け取れる。今回は、request('role') --}}
+                                        <button type="submit" class="btn btn-primary" {{$user->roles->contains($role) ? 'disabled' : ''}}>Attach</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form method="POST" action="{{route('users.role.detach', $user)}}"> 
+                                        @csrf
+                                        @method('PUT')
+                                        <input type="hidden" name="role" value="{{$role->id}}">
+                                        {{-- hidden の値は request('name')で受け取れる。今回は、request('role') --}}
+                                        <button type="submit" class="btn btn-danger"  {{!$user->roles->contains($role) ? 'disabled' : ''}}>Detach</button>
+                                    </form>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
