@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\User;
+use App\Role;
 
 use Illuminate\Http\Request;
 
@@ -18,7 +19,10 @@ class UserController extends Controller
 
         $user = User::findOrFail($id);
 
-        return view('admin.users.profile', compact('user'));
+        return view('admin.users.profile', [
+            'user' => $user,
+            'roles' => Role::all()
+        ]);
     }
 
     public function update($id){
