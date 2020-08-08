@@ -97,7 +97,13 @@
                         <tbody>
                         @foreach ($roles as $role)
                             <tr>
-                                <th><input type="checkbox"></th>
+                                <th><input type="checkbox"
+                                            @foreach ($user->roles as $user_role)
+                                                @if($user_role->slug == $role->slug)
+                                                    checked
+                                                @endif
+                                            @endforeach>
+                                    </th>
                                 <td>{{$role->id}}</td>
                                 <td>{{$role->name}}</td>
                                 <td>{{$role->slug}}</td>
