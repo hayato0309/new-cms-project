@@ -10,4 +10,9 @@ class RoleController extends Controller
 
         return view('admin.roles.index');
     }
+
+    public function store(){
+
+        dd(request('name'));
+    }
 }
