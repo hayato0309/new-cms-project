@@ -59,10 +59,10 @@
 
       @if(auth()->user()->userHasRole('admin'))
       {{-- "admin" roleを持っている人以外には、user周りのリンクを表示させないために、ifの中に以下のcomponentを入れている --}}
-
         <x-admin.sidebar.admin-sidebar-users-links></x-admin.sidebar.admin-sidebar-users-links>
-
       @endif
+
+      <x-admin.sidebar.authorization-links></x-admin.sidebar.authorization-links>
 
       <!-- Nav Item - Utilities Collapse Menu -->
       <li class="nav-item">
