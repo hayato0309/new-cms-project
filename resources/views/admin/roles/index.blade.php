@@ -3,13 +3,26 @@
     
             <h1>Roles</h1>
 
+            <div>
+                @if(session('role-deleted-message'))
+                    <div class="alert alert-danger">{{session('role-deleted-message')}}</div>
+                @endif
+            </div>
+
             <div class="row">
                 <div class="col-sm-3">
                     <form method="POST" action="{{route('roles.store')}}">
                         @csrf
                         <label for="name">Name</label>
-                        <input class="form-control mb-3" type="text" name="name" id="name">
-                        <button class="btn btn-primary btn-block" type="submit">Create</button>
+                        <input class="form-control @error('name') is-invalid @enderror" type="text" name="name" id="name">
+
+                        <div>
+                            @error('name')
+                                <span class="text-danger">{{$message}}</span>
+                            @enderror
+                        </div>
+
+                        <button class="btn btn-primary btn-block mt-3" type="submit">Create</button>
                     </form>
                 </div>
                 <div class="col-sm-9">
@@ -23,27 +36,34 @@
                                 <thead>
                                 <tr>
                                     <th>Id</th>
-                                    <th>Owner</th>
-                                    <th>Title</th>
-                                    <th>Image</th>
-                                    <th>Created At</th>
-                                    <th>Updated At</th>
+                                    <th>Name</th>
+                                    <th>Slug</th>
                                     <th>Delete</th>
                                 </tr>
                                 </thead>
                                 <tfoot>
                                 <tr>
                                     <th>Id</th>
-                                    <th>Owner</th>
-                                    <th>Title</th>
-                                    <th>Image</th>
-                                    <th>Created At</th>
-                                    <th>Updated At</th>
+                                    <th>Name</th>
+                                    <th>Slug</th>
                                     <th>Delete</th>
                                 </tr>
                                 </tfoot>
                                 <tbody>
-                                
+                                    @foreach ($roles as $role)
+                                        <tr>
+                                            <td>{{$role->id}}</td>
+                                            <td><a href="{{route('roles.edit', $role->id)}}">{{$role->name}}</a></td>
+                                            <td>{{$role->slug}}</td>
+                                            <td>
+                                                <form method="post" action="{{route('roles.destroy', $role->id)}}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-danger" type="submit">Delete</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                             </div>
