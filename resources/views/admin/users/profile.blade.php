@@ -62,7 +62,7 @@
                     @enderror
                 </div>
 
-                <button tyle="submit" class="btn btn-primary">Submit</button>
+                <button tyle="submit" class="btn btn-primary mb-3">Submit</button>
             </form>
         </div>
     </div>
