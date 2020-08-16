@@ -10,7 +10,7 @@
         @foreach ($posts as $post)
 
         <div class="card mb-4">
-          <img class="card-img-top" src="/images/{{$post->post_image}}" alt="{{$post->post_image}}" style="width:auto; height:300px; object-fit: cover;">
+          <img class="card-img-top" src="{{$post->post_image}}" alt="{{$post->post_image}}" style="width:auto; height:300px; object-fit: cover;">
           <div class="card-body">
             <h2 class="card-title">{{$post->title}}</h2>
             <p class="card-text">{{Str::limit($post->body, 50, '...')}}</p>

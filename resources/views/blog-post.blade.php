@@ -19,16 +19,12 @@
     <hr>
 
     <!-- Preview Image -->
-    <img class="img-fluid rounded" src="/images/{{$post->post_image}}" alt="{{$post->post_image}}" style="width:900px; height:300px; object-fit:cover">
+    <img class="img-fluid rounded" src="{{$post->post_image}}" alt="{{$post->post_image}}" style="width:900px; height:300px; object-fit:cover">
 
     <hr>
 
     <!-- Post Content -->
-    <p class="lead">{{$post->body}}</p>
-
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.</p>
-
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, doloribus, dolorem iusto blanditiis unde eius illum consequuntur neque dicta incidunt ullam ea hic porro optio ratione repellat perspiciatis. Enim, iure!</p>
+    <p class="lead">{!! $post->body !!}</p>
 
     <hr>
 
