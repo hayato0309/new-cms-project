@@ -20,7 +20,7 @@ class RoleController extends Controller
 
         request()->validate([
 
-            'name' => ['required']
+            'name' => 'required|unique:roles'
 
         ]);
 
