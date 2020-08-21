@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
 use App\Permission;
 use Illuminate\Support\Str;
 
@@ -10,7 +11,7 @@ class PermissionController extends Controller
 {
     public function index(){
 
-        $permissions = Permission::all();
+        $permissions = DB::table('permissions')->paginate(10);
 
         return view('admin.permissions.index', ['permissions'=>$permissions]);
     }

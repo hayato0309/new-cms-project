@@ -33,40 +33,43 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Name</th>
-                                <th>Slug</th>
-                                <th>Delete</th>
-                            </tr>
-                            </thead>
-                            <tfoot>
-                            <tr>
-                                <th>Id</th>
-                                <th>Name</th>
-                                <th>Slug</th>
-                                <th>Delete</th>
-                            </tr>
-                            </tfoot>
-                            <tbody>
-                                @foreach ($permissions as $permission)
-                                    <tr>
-                                        <td>{{$permission->id}}</td>
-                                        <td><a href="{{route('permissions.edit', ['permission'=>$permission])}}">{{$permission->name}}</a></td>
-                                        <td>{{$permission->slug}}</td>
-                                        <td>
-                                            <form method="post" action="{{route('permissions.destroy', $permission->id)}}">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="btn btn-danger" type="submit">Delete</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Slug</th>
+                                    <th>Delete</th>
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Slug</th>
+                                    <th>Delete</th>
+                                </tr>
+                                </tfoot>
+                                <tbody>
+                                    @foreach ($permissions as $permission)
+                                        <tr>
+                                            <td>{{$permission->id}}</td>
+                                            <td><a href="{{route('permissions.edit', $permission->id)}}">{{$permission->name}}</a></td>
+                                            <td>{{$permission->slug}}</td>
+                                            <td>
+                                                <form method="post" action="{{route('permissions.destroy', $permission->id)}}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            <div class="d-flex justify-content-center">
+                                {{$permissions->links()}}
+                            </div>
                         </div>
                     </div>
                 </div>
