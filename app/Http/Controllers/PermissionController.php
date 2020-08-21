@@ -19,7 +19,7 @@ class PermissionController extends Controller
 
         request()->validate([
 
-            'name' => ['required']
+            'name' => 'required|unique:permissions'
 
         ]);
 
@@ -30,6 +30,10 @@ class PermissionController extends Controller
             // 'slug' => Str::slug(Str::lower(request('name')), '-')
             // この書き方も可（公式ドキュメントはこの表記法）
         ]);
+
+        $permission = Permission::latest('created_at')->first();
+
+        session()->flash('permission-created-message', 'Permission was created : ' . $permission->name);
 
         return back();
     }

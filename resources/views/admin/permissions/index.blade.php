@@ -3,6 +3,12 @@
 
         <h1>Permissions</h1>
 
+        @if(session('permission-created-message'))
+            <div class="alert alert-success">
+                {{session('permission-created-message')}}
+            </div>
+        @endif
+
         <div class="row">
             <div class="col-sm-3">
                 <form method="POST" action="{{route('permissions.store')}}">
