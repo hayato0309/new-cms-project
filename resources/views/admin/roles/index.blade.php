@@ -3,6 +3,12 @@
     
             <h1>Roles</h1>
 
+            @if(session('role-created-message'))
+                <div class="alert alert-success">
+                    {{session('role-created-message')}}
+                </div>
+            @endif
+
             <div>
                 @if(session('role-deleted-message'))
                     <div class="alert alert-danger">{{session('role-deleted-message')}}</div>

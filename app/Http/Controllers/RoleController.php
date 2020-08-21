@@ -32,6 +32,10 @@ class RoleController extends Controller
             // この書き方も可（公式ドキュメントはこの表記法）
         ]);
 
+        $role = Role::latest('created_at')->first();
+
+        session()->flash('role-created-message', 'Role was created : ' . $role->name);
+
         return back();
     }
 
