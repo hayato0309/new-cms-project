@@ -3,15 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
+use DB;
 use App\Permission;
 use App\Role;
+use Illuminate\Support\Str;
 
 class RoleController extends Controller
 {
     public function index(){
 
-        $roles = Role::all();
+        $roles = DB::table('roles')->paginate(10);
 
         return view('admin.roles.index', ['roles' => $roles]);
     }

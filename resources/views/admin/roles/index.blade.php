@@ -38,40 +38,43 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Name</th>
-                                    <th>Slug</th>
-                                    <th>Delete</th>
-                                </tr>
-                                </thead>
-                                <tfoot>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Name</th>
-                                    <th>Slug</th>
-                                    <th>Delete</th>
-                                </tr>
-                                </tfoot>
-                                <tbody>
-                                    @foreach ($roles as $role)
-                                        <tr>
-                                            <td>{{$role->id}}</td>
-                                            <td><a href="{{route('roles.edit', $role->id)}}">{{$role->name}}</a></td>
-                                            <td>{{$role->slug}}</td>
-                                            <td>
-                                                <form method="post" action="{{route('roles.destroy', $role->id)}}">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn btn-danger" type="submit">Delete</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Name</th>
+                                        <th>Slug</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                    </thead>
+                                    <tfoot>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Name</th>
+                                        <th>Slug</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        @foreach ($roles as $role)
+                                            <tr>
+                                                <td>{{$role->id}}</td>
+                                                <td><a href="{{route('roles.edit', $role->id)}}">{{$role->name}}</a></td>
+                                                <td>{{$role->slug}}</td>
+                                                <td>
+                                                    <form method="post" action="{{route('roles.destroy', $role->id)}}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                                <div class="d-flex justify-content-center">
+                                    {{$roles->links()}}
+                                </div>
                             </div>
                         </div>
                     </div>
