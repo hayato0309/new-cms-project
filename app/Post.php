@@ -25,4 +25,9 @@ class Post extends Model
 
         return asset('/storage/' . $value);
     }
+
+    public function categories(){
+        
+        return $this->belongsToMany('App\Category');
+    }
 }

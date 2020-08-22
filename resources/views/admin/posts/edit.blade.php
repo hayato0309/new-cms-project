@@ -1,6 +1,9 @@
 <x-admin-master>   
 
     @section('content')
+
+        @include('includes.tinyeditor')
+
         <h1>Edit a Post</h1>
 
         <form method="POST" action="{{route('post.update', ['id' => $post->id])}}" enctype="multipart/form-data">
@@ -29,6 +32,19 @@
             <div class="form-group">
                 <textarea name="body" class="form-control" id="body" cols="30" rows="10">{{$post->body}}</textarea>
             </div>
+
+            <div class="mb-2">Select categories</div>
+
+            @foreach ($categories as $category)
+                <input type="checkbox" id="category" name="categories[]" value="{{$category->id}}" {{in_array($category->id, $post_categories_id) == TRUE ? 'checked' : ''}}>
+                <label class="mr-3" for="category">{{$category->name}}</label>
+            @endforeach
+
+            @error('categories')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+
+            <br>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
 

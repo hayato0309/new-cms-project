@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
+use DB;
 use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -34,33 +36,41 @@ class PostController extends Controller
 
     public function create(){
 
-        return view('admin.posts.create');
+        $categories = Category::orderBy('name')->get();
+
+        return view('admin.posts.create', ['categories' => $categories]);
     }
 
 
-    public function store(){
+    public function store(Request $request){
+
+        // dd($request);
 
         $this->authorize('create', Post::class);
         // 新しいPostを作るときはまだUserが決まっておらず、基本的にはAuthenticationは必要ないが、
         // ハッカー対策としてPolicyを用意することができる。
         // 「ログインしたユーザーなら誰でもPostを作れる」というロジックをPolicy内に記述する必要あり。
 
-        $input = request()->validate([
+        $post = request()->validate([
             'title' => 'required|min:8|max:255',
             'post_image' => 'file',
             // 'post_image' => 'mimes:jpeg,png',
-            'body' => 'required'
+            'body' => 'required',
+            'categories' => 'required'
         ]);
 
         if(request('post_image')){
-            $input['post_image'] = request('post_image')->store('images');
+            $post['post_image'] = request('post_image')->store('images');
         }
 
-        auth()->user()->posts()->create($input);
+        auth()->user()->posts()->create($post);
 
+        $latest_post = Post::latest()->first();
+        $latest_post->categories()->attach($request->categories);
+       
+        session()->flash('post-created-message', 'Post was created :' . $post['title']);
         // sessionでメッセージを一時的に表示させる方法② - session()を使う
         // bladeでのsessionデータの受け取り方は、posts/index.blade.php を確認
-        session()->flash('post-created-message', 'Post was created. \'' . $input['title'] . '\'');
         // $input->title でやろうと思ったが、まだオブジェクトを生成する前で、inputは配列なのでできない。
         // $input['title'] とする必要あり。
 
@@ -72,11 +82,17 @@ class PostController extends Controller
 
         $post = Post::findOrFail($id);
 
+        foreach($post->categories as $category){
+            $post_categories_id[] = $category->id;
+        }
+
+        $categories = Category::orderBy('name')->get();
+
         $this->authorize('view', $post);
         // タイトルクリック後に個別のpostを見れなくするためのfunctionを、この１行で有効化。
         // 第二引数に$postを渡さなかったら、自分のpostも見れなくなる。
 
-        return view('admin.posts.edit', compact('post'));
+        return view('admin.posts.edit', ['post' => $post, 'post_categories_id' => $post_categories_id ,'categories' => $categories]);
     }
 
 
@@ -86,7 +102,8 @@ class PostController extends Controller
             'title' => 'required|min:8|max:255',
             'post_image' => 'file',
             // 'post_image' => 'mimes:jpeg,png',
-            'body' => 'required'
+            'body' => 'required',
+            'categories' => 'required'
         ]);
 
         $post = Post::findOrFail($id);
@@ -106,7 +123,10 @@ class PostController extends Controller
 
         auth()->user()->posts()->save($post);
 
-        session()->flash('post-updated-message', 'Post was updated. \'' . $input['title'] . '\'');
+        $post->categories()->sync(request('categories'));
+        // categoriesの更新
+
+        session()->flash('post-updated-message', 'Post was updated. : ' . $input['title']);
 
         return redirect()->route('post.index');
     }
@@ -122,7 +142,7 @@ class PostController extends Controller
 
         // sessionでメッセージを一時的に表示させる方法① - Sessionクラスを使う
         // bladeでのsessionデータの受け取り方は、posts/index.blade.php を確認
-        Session::flash('post-deleted-message','Post was deleted.');
+        Session::flash('post-deleted-message','Post was deleted. : ' . $post->name);
 
         return back();
     }
