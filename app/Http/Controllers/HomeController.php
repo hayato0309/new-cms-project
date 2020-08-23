@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use DB;
 use App\Post;
 use Illuminate\Http\Request;
@@ -26,11 +27,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // $posts = Post::all()->sortByDesc('created_at');
+
         $posts = DB::table('posts')->orderBy('created_at', 'desc')->paginate(5);
 
-        // dd($posts);
+        $categories = Category::orderBy('name')->get();
 
-        return view('home', compact('posts'));
+        return view('home', ['posts' => $posts, 'categories' => $categories]);
     }
 }

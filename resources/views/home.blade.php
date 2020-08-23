@@ -56,4 +56,27 @@
 
 @endsection
 
+@section('categories')
+
+  <div class="card my-4">
+    <h5 class="card-header">Categories</h5>
+    <div class="card-body">
+      <form method="POST" action="">
+        @csrf
+        <table>
+          @foreach ($categories as $category)
+            <tr>
+              <td>
+                <input type="checkbox" id="category" name="categories[]" value="{{$category->id}}">
+                <label class="mr-3" for="category">{{$category->name}}</label>
+              </td>
+            </tr>
+          @endforeach
+        </table>
+      </form>
+    </div>
+  </div>
+
+@endsection
+
 </x-home-master>
