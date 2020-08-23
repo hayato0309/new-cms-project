@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/post/{id}', 'PostController@show')->name('post');
+Route::get('/post/{id}', 'PostController@show')->name('post.show');
 
 Route::middleware(['auth'])->group(function(){
 

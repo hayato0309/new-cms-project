@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Comment;
 use DB;
 use App\Post;
 use Illuminate\Http\Request;
@@ -10,7 +11,6 @@ use Illuminate\Support\Facades\Session;
 
 class PostController extends Controller
 {
-    //
 
     public function index(){
 
@@ -29,8 +29,11 @@ class PostController extends Controller
     public function show($id){
 
         $post = Post::findOrFail($id);
+
+        $comments = Comment::where('post_id', $id)->get();
+
     
-        return view('blog-post', compact('post'));
+        return view('blog-post', ['post' => $post, 'comments' => $comments]);
     }
 
 

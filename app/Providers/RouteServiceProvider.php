@@ -56,6 +56,8 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapCategoriesRoutes();
 
+        $this->mapCommentsRoutes();
+
         //
     }
 
@@ -126,5 +128,13 @@ class RouteServiceProvider extends ServiceProvider
             ->middleware('web')
             ->namespace($this->namespace)
             ->group(base_path('routes/web/categories.php'));
+    }
+
+    protected function mapCommentsRoutes()
+    {
+        Route::prefix('admin')
+            ->middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/web/comments.php'));
     }
 }

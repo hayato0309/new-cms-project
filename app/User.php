@@ -79,4 +79,9 @@ class User extends Authenticatable
 
         return FALSE;
     }
+
+    public function comments(){
+
+        return $this->hasMany('App\Comment');
+    }
 }
