@@ -7,6 +7,8 @@
 
   @if(session('comment-posted-message'))
     <div class="alert alert-success">{{session('comment-posted-message')}}</div>
+  @elseif(session('comment-updated-message'))
+    <div class="alert alert-success">{{session('comment-updated-message')}}</div>
   @elseif(session('comment-deleted-message'))
     <div class="alert alert-danger">{{session('comment-deleted-message')}}</div>
   @endif
@@ -58,37 +60,38 @@
           <div class="float-right text-secondary">{{$comment->created_at->diffForHumans()}}</div>
         </div>
         
-        {{-- <form method='POST' action="{{route('comment.destroy', $comment)}}">
-          @csrf
-          @method('DELETE')
-          <button class="btn btn-danger btn-sm">Delete</button>
-        </form> --}}
-        <button type="button" class="btn btn-secondary btn-sm mr-1" data-toggle="modal" data-target="#editModal">Edit</button>
+        @if($comment->user_id == auth()->user()->id)
+          <button type="button" class="btn btn-secondary btn-sm mr-1" data-toggle="modal" data-target="#editModal">Edit</button>
+          {{-- modal open button --}}
 
-        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-          <div class="modal-dialog">
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <h4 class="modal-title" id="myModalLabel">Edit your comment</h4></h4>
-                  </div>
-                  <div class="modal-body">
-                      <form action="">
-                        <textarea name="comment" id="comment" rows="8" style="width:100%"></textarea>
-                      </form>
-                  </div>
-                  <div class="modal-footer">
-                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-secondary">Update</button>
-                  </div>
-              </div>
+          {{-- modal content --}}
+          <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Edit your comment</h4></h4>
+                    </div>
+                    <form method="POST" action="{{route('comment.update', $comment)}}">
+                      @csrf
+                      @method('PUT')
+                      <div class="modal-body">
+                        <textarea class="p-2" name="comment" id="comment" rows="8" style="width:100%">{{$comment->comment}}</textarea>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-secondary">Update</button>
+                      </div>
+                    </form>
+                </div>
+            </div>
           </div>
-        </div>
 
-        <form method='POST' action="{{route('comment.destroy', $comment)}}">
-          @csrf
-          @method('DELETE')
-          <button class="btn btn-danger btn-sm">Delete</button>
-        </form>
+          <form method='POST' action="{{route('comment.destroy', $comment)}}">
+            @csrf
+            @method('DELETE')
+            <button class="btn btn-danger btn-sm">Delete</button>
+          </form>
+        @endif
       </div>    
     @endforeach
     {{-- <div class="media mb-4">
