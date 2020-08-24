@@ -57,6 +57,33 @@
           <div>{{$comment->comment}}</div>
           <div class="float-right text-secondary">{{$comment->created_at->diffForHumans()}}</div>
         </div>
+        
+        {{-- <form method='POST' action="{{route('comment.destroy', $comment)}}">
+          @csrf
+          @method('DELETE')
+          <button class="btn btn-danger btn-sm">Delete</button>
+        </form> --}}
+        <button type="button" class="btn btn-secondary btn-sm mr-1" data-toggle="modal" data-target="#editModal">Edit</button>
+
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h4 class="modal-title" id="myModalLabel">Edit your comment</h4></h4>
+                  </div>
+                  <div class="modal-body">
+                      <form action="">
+                        <textarea name="comment" id="comment" rows="8" style="width:100%"></textarea>
+                      </form>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-secondary">Update</button>
+                  </div>
+              </div>
+          </div>
+        </div>
+
         <form method='POST' action="{{route('comment.destroy', $comment)}}">
           @csrf
           @method('DELETE')
