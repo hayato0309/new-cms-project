@@ -60,7 +60,7 @@
           <div class="float-right text-secondary">{{$comment->created_at->diffForHumans()}}</div>
         </div>
         
-        @if($comment->user_id == auth()->user()->id)
+        @if($comment->user_id == $login_user_id)
           <button type="button" class="btn btn-secondary btn-sm mr-1" data-toggle="modal" data-target="#editModal">Edit</button>
           {{-- modal open button --}}
 

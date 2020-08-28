@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Category;
 use App\Comment;
 use DB;
@@ -32,8 +33,14 @@ class PostController extends Controller
 
         $comments = Comment::where('post_id', $id)->get();
 
+        if(Auth::check()) {
+            $login_user_id = auth()->user()->id;
+        } else {
+            $login_user_id = 0;
+        }
+
     
-        return view('blog-post', ['post' => $post, 'comments' => $comments]);
+        return view('blog-post', ['post' => $post, 'comments' => $comments, 'login_user_id' => $login_user_id]);
     }
 
 
