@@ -59,39 +59,70 @@
           <div>{{$comment->comment}}</div>
           <div class="float-right text-secondary">{{$comment->created_at->diffForHumans()}}</div>
         </div>
-        
-        @if($comment->user_id == $login_user_id)
-          <button type="button" class="btn btn-secondary btn-sm mr-1" data-toggle="modal" data-target="#editModal">Edit</button>
-          {{-- modal open button --}}
 
-          {{-- modal content --}}
-          <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+        @if($login_user_id != 0)
+          {{-- reply modal open button --}}
+          <button type="button" class="btn btn-info btn-sm mr-1" data-toggle="modal" data-target="#replyModal">Reply</button>
+
+          {{-- reply modal content --}}
+          <div class="modal fade" id="replyModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel">Edit your comment</h4></h4>
+                        <h4 class="modal-title" id="myModalLabel">Write a reply</h4></h4>
                     </div>
                     <form method="POST" action="{{route('comment.update', $comment)}}">
                       @csrf
-                      @method('PUT')
                       <div class="modal-body">
-                        <textarea class="p-2" name="comment" id="comment" rows="8" style="width:100%">{{$comment->comment}}</textarea>
+                        <div class="border-left border-secondary mb-2 pl-2" style="border-width:2px !important">{{$comment->comment}}</div>
+                        <div>
+                          <textarea class="p-2" name="comment" id="comment" rows="8" style="width:100%"></textarea>
+                        </div>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-secondary">Update</button>
+                        <button type="submit" class="btn btn-primary">Reply</button>
                       </div>
                     </form>
                 </div>
             </div>
           </div>
+        
+          @if($comment->user_id == $login_user_id)
+            {{-- edit comment modal open button --}}
+            <button type="button" class="btn btn-secondary btn-sm mr-1" data-toggle="modal" data-target="#editModal">Edit</button>
 
-          <form method='POST' action="{{route('comment.destroy', $comment)}}">
-            @csrf
-            @method('DELETE')
-            <button class="btn btn-danger btn-sm">Delete</button>
-          </form>
+            {{-- edit comemnt modal content --}}
+            <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h4 class="modal-title" id="myModalLabel">Edit your comment</h4></h4>
+                      </div>
+                      <form method="POST" action="{{route('comment.update', $comment)}}">
+                        @csrf
+                        @method('PUT')
+                        <div class="modal-body">
+                          <textarea class="p-2" name="comment" id="comment" rows="8" style="width:100%">{{$comment->comment}}</textarea>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                      </form>
+                  </div>
+              </div>
+            </div>
+
+            <form method='POST' action="{{route('comment.destroy', $comment)}}">
+              @csrf
+              @method('DELETE')
+              <button class="btn btn-danger btn-sm">Delete</button>
+            </form>
+          @endif
+
         @endif
+
       </div>    
     @endforeach
     {{-- <div class="media mb-4">
